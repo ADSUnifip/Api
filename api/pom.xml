@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com</groupId>
-    <artifactId>sospet</artifactId>
+    <artifactId>API</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>sospet</name>
-    <description>API SosPet</description>
+    <name>API</name>
+    <description>API</description>
     <properties>
         <java.version>17</java.version>
     </properties>

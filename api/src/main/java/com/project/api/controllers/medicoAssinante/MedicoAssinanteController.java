@@ -1,5 +1,6 @@
 package com.project.api.controllers.medicoAssinante;
 
+import com.project.api.dtos.medicoAssinante.DadosAtualizacaoMedicoAssinante;
 import com.project.api.dtos.medicoAssinante.DadosCadastroMediccoAssinante;
 import com.project.api.models.medicoAssinante.MedicoAssinante;
 import com.project.api.services.medicoAssinante.MedicoAssinanteService;
@@ -71,5 +72,11 @@ public class MedicoAssinanteController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
+    }
+
+    @PatchMapping("atualizar/{id}")
+    public ResponseEntity atualizarMedicoAssinante(@PathVariable UUID id, @RequestBody DadosAtualizacaoMedicoAssinante dados) {
+        var medico = medicoAssinanteService.atualizarMedico(id, dados);
+        return medico;
     }
 }

@@ -1,10 +1,14 @@
 package com.project.api.services.medicoAssinante;
 
+import com.project.api.dtos.medicoAssinante.DadosAtualizacaoMedicoAssinante;
 import com.project.api.dtos.medicoAssinante.DadosCadastroMediccoAssinante;
 import com.project.api.models.medicoAssinante.MedicoAssinante;
 import com.project.api.repositories.medicoAssinante.MedicoAssinanteRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,5 +63,33 @@ public class MedicoAssinanteService {
         }
 
         return false;
+    }
+
+    @Transactional
+    public ResponseEntity atualizarMedico(UUID id, DadosAtualizacaoMedicoAssinante dados) {
+        Optional<MedicoAssinante> medicoOptional = buscarMedicoAssinantePorId(id);
+
+        if (medicoOptional.isPresent()) {
+            MedicoAssinante medico = medicoOptional.get();
+
+            // Atualize os campos desejados com base no DTO recebido no corpo da solicitação
+            if (dados.numeroConselho() != null) {
+                medico.setNumeroConselho(dados.numeroConselho());
+            }
+            if (dados.ufConselho() != null) {
+                medico.setUfConselho(dados.ufConselho());
+            }
+            if (dados.tipoConselho() != null) {
+                medico.setTipoConselho(dados.tipoConselho());
+            }
+            if (dados.nomeMedicoAssinante() != null) {
+                medico.setNomeMedicoAssinante(dados.nomeMedicoAssinante());
+            }
+
+            // Salve as alterações no repositório
+            medicoAssinanteRepository.save(medico);
+            return ResponseEntity.status(HttpStatus.OK).body(medico);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }

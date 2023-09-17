@@ -46,4 +46,44 @@ public class MedicoAssinante {
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
     }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getNumeroConselho() {
+        return numeroConselho;
+    }
+
+    public void setNumeroConselho(String numeroConselho) {
+        this.numeroConselho = numeroConselho;
+    }
+
+    public UFConselho getUfConselho() {
+        return ufConselho;
+    }
+
+    public void setUfConselho(UFConselho ufConselho) {
+        this.ufConselho = ufConselho;
+    }
+
+    public String getTipoConselho() {
+        return tipoConselho;
+    }
+
+    public void setTipoConselho(String tipoConselho) {
+        this.tipoConselho = tipoConselho;
+    }
+
+    public String getNomeMedicoAssinante() {
+        return nomeMedicoAssinante;
+    }
+
+    public void setNomeMedicoAssinante(String nomeMedicoAssinante) {
+        this.nomeMedicoAssinante = nomeMedicoAssinante;
+    }
 }

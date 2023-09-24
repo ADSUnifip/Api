@@ -1,0 +1,25 @@
+Index: api/src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>spring.datasource.url= jdbc:postgresql://localhost:5432/lab-api\r\nspring.datasource.username=postgres\r\nspring.datasource.password=root\r\n\r\nhibernate.hbm2ddl.auto=update\r\nspring.jpa.hibernate.ddl-auto=update\r\n\r\nspring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true\r\n\r\nspring.servlet.multipart.max-file-size=10MB\r\nspring.servlet.multipart.max-request-size=10MB
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/api/src/main/resources/application.properties b/api/src/main/resources/application.properties
+--- a/api/src/main/resources/application.properties	
++++ b/api/src/main/resources/application.properties	
+@@ -1,6 +1,6 @@
+ spring.datasource.url= jdbc:postgresql://localhost:5432/lab-api
+ spring.datasource.username=postgres
+-spring.datasource.password=root
++spring.datasource.password=postgres
+ 
+ hibernate.hbm2ddl.auto=update
+ spring.jpa.hibernate.ddl-auto=update
+@@ -8,4 +8,4 @@
+ spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
+ 
+ spring.servlet.multipart.max-file-size=10MB
+-spring.servlet.multipart.max-request-size=10MB
+\ No newline at end of file
++spring.servlet.multipart.max-request-size=10MB

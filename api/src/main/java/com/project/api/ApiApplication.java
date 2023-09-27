@@ -5,8 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 
-@EntityScan(basePackages = "com.project.api.models")
-@ComponentScan("com.project.api.services.PatientService")
 @SpringBootApplication
 public class  ApiApplication {
 

@@ -1,8 +1,9 @@
-package com.project.api.controllers;
+package com.project.api.controllers.PatienController;
 
-import com.project.api.dtos.PatientDto;
-import com.project.api.models.Patient;
-import com.project.api.services.PatientService;
+import com.project.api.dtos.PatientDto.PatientDto;
+import com.project.api.dtos.PatientDto.UpdatePatientDto;
+import com.project.api.models.Patient.Patient;
+import com.project.api.services.PatientService.PatientService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
@@ -19,14 +20,16 @@ import java.util.*;
 @RequestMapping("api/patient")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class PatientController {
-    @Autowired
+    @Autowired()
     PatientService patientService;
 
+    ///Mapeamento para puxar todo os pacientes
     @GetMapping
     public ResponseEntity<List<Patient>> getAllPatient(){
         return ResponseEntity.status(HttpStatus.OK).body(patientService.findAll());
     }
 
+    ///Mapemamento para puxar o paciente pelo ID, sendo passado o ID como paramento da URL
     @GetMapping("/{id}")
     public ResponseEntity<Object> getPatientById(@PathVariable(value = "id")UUID id){
         Optional<Patient> patientOptional = patientService.findById(id);
@@ -36,23 +39,28 @@ public class PatientController {
         return ResponseEntity.status(HttpStatus.OK).body(patientOptional.get());
     }
 
-    @GetMapping("/findByCpf")
-    public ResponseEntity<Optional<Patient>> getFindByCpf(@Validated @RequestParam(value = "cpf")String cpf){
-        return ResponseEntity.status(HttpStatus.OK).body(patientService.findByCpf(cpf));
+
+    ///Mapeamento para puxar o paciente pelo seu CPF, sendo passado o CPF no body da requisição
+    @GetMapping("/findByCPF")
+    public ResponseEntity<List<Patient>> getFindByCpf(@RequestBody Patient patient){
+        return ResponseEntity.status(HttpStatus.OK).body(patientService.findByCpf(patient.getCpf()));
     }
 
+    ///Mapeamento para puxar o paciente pelo seu NOME, sendo passado o NOME no boyd da requisição
     @GetMapping("/findByFullName")
-    public ResponseEntity<Optional<Patient>> getFindByFullName(@Validated @RequestParam(value = "fullName")String fullName){
+    public ResponseEntity<List<Patient>> getFindByFullName(@Validated @RequestParam(value = "fullName")String fullName){
         return  ResponseEntity.status(HttpStatus.OK).body(patientService.findByFullName(fullName));
     }
 
+    ///Método para adicionar um paciente
     @PostMapping
-    public ResponseEntity<Object> savePatient (@Valid PatientDto patientDto, HttpServletRequest request) throws IOException {
+    public ResponseEntity<Object> savePatient (@RequestBody @Valid PatientDto patientDto, HttpServletRequest request) throws IOException {
         var patient = new Patient();
         BeanUtils.copyProperties(patientDto, patient);
         return ResponseEntity.status(HttpStatus.CREATED).body(patientService.save(patient));
     }
 
+    ///Método para deletar um cliente, porém ele não é exluido do banco de dados apenas recebe o false no ACTIVE
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deletePatient (@PathVariable(value = "id")UUID id){
         Optional<Patient> patientOptional = patientService.findById(id);
@@ -63,17 +71,10 @@ public class PatientController {
         return ResponseEntity.status(HttpStatus.OK).body("Patient deleted succesfuly");
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<Object> updatePatient (@PathVariable(value = "id")UUID id, HttpServletRequest request) {
-        Optional<Patient> patientOptional = patientService.findById(id);
-        if (patientOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient not found");
-        }
-        Map<Object, Object> objectMap = new HashMap<>();
-        for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()){
-            objectMap.put(entry.getKey(), entry.getValue()[0]);
-        }
-        patientService.partialUpdate(patientOptional.get(), objectMap);
-        return ResponseEntity.status(HttpStatus.OK).body(patientOptional.get());
+    ///Método para atualizar algum atributo do paciente
+    @PatchMapping("/{id}")
+    public ResponseEntity updatePatient(@PathVariable UUID id, @RequestBody UpdatePatientDto dto){
+        var patient = patientService.updatePatient(id, dto);
+        return patient;
     }
 }

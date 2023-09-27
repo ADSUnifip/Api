@@ -1,6 +1,6 @@
-package com.project.api.repositories;
+package com.project.api.repositories.PatientRepository;
 
-import com.project.api.models.Patient;
+import com.project.api.models.Patient.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,8 +14,8 @@ public interface PatientRepository extends JpaRepository <Patient, UUID> {
 
     Optional<Patient> findById(UUID id);
 
-    Optional<Patient> findByFullName(String fullName);
+    List<Patient> findByfullName(String fullName);
 
-    Optional<Patient> findByCpf(String cpf);
+    List<Patient> findBycpf(String cpf);
 
 }

@@ -3,6 +3,7 @@ package com.project.api.controllers.usuario;
 import com.project.api.dtos.usuario.BuscarPorNomeDTO;
 import com.project.api.dtos.usuario.DadosCadastroUsuario;
 import com.project.api.models.usuario.Usuario;
+import com.project.api.repositories.usuario.UsuarioRepository;
 import com.project.api.services.usuario.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private UsuarioRepository repository;
 
     @PostMapping
     public ResponseEntity criarUsuario(@RequestBody @Valid DadosCadastroUsuario dados) {

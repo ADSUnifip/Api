@@ -39,6 +39,10 @@ public class UsuarioService {
         return usuarioRepository.findByNome(nome);
     }
 
+    public Optional<Usuario> buscarPorEmail(String email) {
+        return usuarioRepository.buscarPorEmail(email);
+    }
+
     public Optional<Usuario> buscarPorCpf(String cpf) {
         //return usuarioRepository.encontrarPorCpf(cpf);
         return usuarioRepository.findByCpf(cpf);

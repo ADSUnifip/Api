@@ -1,6 +1,10 @@
 package com.project.api.controllers.usuario;
 
 import com.project.api.dtos.usuario.DadosAutenticacao;
+import com.project.api.dtos.usuario.DadosTokenJWT;
+import com.project.api.models.usuario.Usuario;
+import com.project.api.services.authentication.TokenService;
+import com.project.api.services.usuario.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,15 +23,21 @@ public class AutenticacaoController {
     @Autowired
     private AuthenticationManager manager;
 
+    @Autowired
+    private TokenService tokenService;
+
+    @Autowired
+    private UsuarioService usuarioService;
+
     @PostMapping
     public ResponseEntity efetuarLogin(@RequestBody @Valid DadosAutenticacao dados) {
-        System.out.println("To no inicio");
         var token = new UsernamePasswordAuthenticationToken(dados.email(), dados.senha());
-        System.out.println("To no meio");
-        System.out.println(token);
-        //var autenticacaio = manager.authenticate(token);
-        System.out.println("To no fim");
-        return ResponseEntity.status(HttpStatus.OK).build();
+        var user = usuarioService.buscarPorEmail((String) token.getPrincipal());
+        var tokenJWT = tokenService.gerarToken(user.get());
+
+        return ResponseEntity.status(HttpStatus.OK).body(new DadosTokenJWT(tokenJWT));
+
+        //return ResponseEntity.status(HttpStatus.OK).build();
 
     }
 }

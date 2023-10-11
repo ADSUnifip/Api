@@ -14,6 +14,9 @@ public interface UsuarioRepository  extends JpaRepository<Usuario, UUID> {
     Optional<Usuario> encontrarPorNome(@Param("nome") String nome);*/
     Optional<Usuario> findByNome(String nome);
 
+    @Query("SELECT u FROM Usuario u WHERE u.email = :email")
+    Optional<Usuario> buscarPorEmail(String email);
+
     Optional<Usuario> findByCpf(String cpf);
 
     UserDetails findByEmail(String email);

@@ -38,8 +38,7 @@ public class TokenService {
                     // reusable verifier instance
                     .build().verify(tokenJWT).getSubject();
         } catch (JWTVerificationException exception){
-            System.out.println("Depois: " + tokenJWT);
-            throw new RuntimeException(tokenJWT);
+            throw new RuntimeException(exception);
         }
     }
 

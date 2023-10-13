@@ -16,9 +16,12 @@ import java.util.Date;
 @Service
 public class TokenService {
 
+    @Value("${jwt.password}")
+    private String secret;
+
     public String gerarToken(Usuario usuario) {
         try {
-            var algoritmo = Algorithm.HMAC256("12345678");
+            var algoritmo = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer("Projeto P5")
                     .withSubject(usuario.getEmail())
@@ -31,14 +34,12 @@ public class TokenService {
 
     public String getSubject(String tokenJWT) {
         try {
-            var algoritmo = Algorithm.HMAC256("12345678");
+            var algoritmo = Algorithm.HMAC256(secret);
             return JWT.require(algoritmo)
-                    // specify an specific claim validations
                     .withIssuer("Projeto P5")
-                    // reusable verifier instance
                     .build().verify(tokenJWT).getSubject();
         } catch (JWTVerificationException exception){
-            throw new RuntimeException(exception);
+            throw new RuntimeException("Token JWT inválido ou expirado");
         }
     }
 

@@ -2,6 +2,7 @@ package com.project.api.controllers.usuario;
 
 import com.project.api.dtos.usuario.BuscarPorNomeDTO;
 import com.project.api.dtos.usuario.DadosCadastroUsuario;
+import com.project.api.dtos.usuario.DadosListagemUsuario;
 import com.project.api.models.usuario.Usuario;
 import com.project.api.repositories.usuario.UsuarioRepository;
 import com.project.api.services.authentication.TokenService;
@@ -38,7 +39,7 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Usuario>> listarUsuarios() {
+    public ResponseEntity<List<DadosListagemUsuario>> listarUsuarios() {
         var usuarios = usuarioService.listarUsuarios();
         return ResponseEntity.status(HttpStatus.OK).body(usuarios);
     }

@@ -1,6 +1,7 @@
 package com.project.api.services.usuario;
 
 import com.project.api.dtos.usuario.DadosCadastroUsuario;
+import com.project.api.dtos.usuario.DadosListagemUsuario;
 import com.project.api.models.usuario.Usuario;
 import com.project.api.repositories.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService {
@@ -32,9 +34,20 @@ public class UsuarioService {
     }
 
     @Transactional
-    public List<Usuario> listarUsuarios() {
+    public List<DadosListagemUsuario> listarUsuarios() {
         var usuarios = usuarioRepository.findAll();
-        return usuarios;
+        List<DadosListagemUsuario> dadosUsuarios = usuarios.stream()
+                .map(usuario -> new DadosListagemUsuario(
+                        usuario.getId(),
+                        usuario.getNome(),
+                        usuario.getCpf(),
+                        usuario.getDataNacimento(),
+                        usuario.getSexo(),
+                        usuario.getEmail(),
+                        usuario.getTipoUsuario()
+                ))
+                .collect(Collectors.toList());
+        return dadosUsuarios;
     }
 
     public Optional<Usuario> buscarPorID(UUID id) {

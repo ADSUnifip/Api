@@ -1,6 +1,7 @@
 package com.project.api.controllers.usuario;
 
 import com.project.api.dtos.usuario.BuscarPorNomeDTO;
+import com.project.api.dtos.usuario.DadosAtualizacaoUsuario;
 import com.project.api.dtos.usuario.DadosCadastroUsuario;
 import com.project.api.dtos.usuario.DadosListagemUsuario;
 import com.project.api.models.usuario.Usuario;
@@ -72,5 +73,14 @@ public class UsuarioController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity atualizarUsuario(@PathVariable UUID id, @RequestBody DadosAtualizacaoUsuario dados) {
+        var usuarioAtualizado = usuarioService.atualizarUsuario(id, dados);
+        if (usuarioAtualizado != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(usuarioAtualizado);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }

@@ -48,31 +48,28 @@ public class UsuarioController {
     @GetMapping("/{id}")
     public ResponseEntity buscarPorId(@PathVariable UUID id) {
         var usuario = usuarioService.buscarPorID(id);
-        if (usuario.isPresent()) {
-            return ResponseEntity.status(HttpStatus.OK).body(usuario.get());
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        if (usuario != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(usuario);
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @GetMapping("/nome")
     public ResponseEntity buscarPorNome(@RequestBody BuscarPorNomeDTO dados) {
         var usuario = usuarioService.buscarPorNome(dados.nome());
-        if (usuario.isPresent()) {
-            return ResponseEntity.status(HttpStatus.OK).body(usuario.get());
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        if (usuario != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(usuario);
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @GetMapping("/cpf/{cpf}")
     public ResponseEntity buscarPorCpf(@PathVariable String cpf) {
         var usuario = usuarioService.buscarPorCpf(cpf);
-        if (usuario.isPresent()) {
-            return ResponseEntity.status(HttpStatus.OK).body(usuario.get());
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        if (usuario != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(usuario);
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @PatchMapping("/{id}")

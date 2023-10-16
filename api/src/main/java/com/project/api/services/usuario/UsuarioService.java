@@ -52,25 +52,80 @@ public class UsuarioService {
         return dadosUsuarios;
     }
 
-    public Optional<Usuario> buscarPorID(UUID id) {
-        return usuarioRepository.findById(id);
+    public DadosListagemUsuario buscarPorID(UUID id) {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
+
+        if (usuarioOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+            DadosListagemUsuario usuarioReturn = new DadosListagemUsuario(usuario.getId(),
+                    usuario.getNome(),
+                    usuario.getCpf(),
+                    usuario.getDataNacimento(),
+                    usuario.getSexo(),
+                    usuario.getEmail(),
+                    usuario.getTipoUsuario());
+            return usuarioReturn;
+        }
+        return null;
     }
 
-    public Optional<Usuario> buscarPorNome(String nome) {
-        return usuarioRepository.findByNome(nome);
+    public DadosListagemUsuario buscarPorNome(String nome) {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByNome(nome);
+
+        if (usuarioOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+            DadosListagemUsuario usuarioReturn = new DadosListagemUsuario(usuario.getId(),
+                    usuario.getNome(),
+                    usuario.getCpf(),
+                    usuario.getDataNacimento(),
+                    usuario.getSexo(),
+                    usuario.getEmail(),
+                    usuario.getTipoUsuario());
+            return usuarioReturn;
+        }
+        return null;
     }
 
-    public Optional<Usuario> buscarPorEmail(String email) {
+    public DadosListagemUsuario buscarPorEmail(String email) {
+        Optional<Usuario> usuarioOptional = usuarioRepository.buscarPorEmail(email);
+
+        if (usuarioOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+            DadosListagemUsuario usuarioReturn = new DadosListagemUsuario(usuario.getId(),
+                    usuario.getNome(),
+                    usuario.getCpf(),
+                    usuario.getDataNacimento(),
+                    usuario.getSexo(),
+                    usuario.getEmail(),
+                    usuario.getTipoUsuario());
+            return usuarioReturn;
+        }
+        return null;
+    }
+
+    public Optional<Usuario> buscarPorEmailAuth(String email) {
         return usuarioRepository.buscarPorEmail(email);
     }
 
-    public Optional<Usuario> buscarPorCpf(String cpf) {
-        //return usuarioRepository.encontrarPorCpf(cpf);
-        return usuarioRepository.findByCpf(cpf);
+    public DadosListagemUsuario buscarPorCpf(String cpf) {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByCpf(cpf);
+
+        if (usuarioOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+            DadosListagemUsuario usuarioReturn = new DadosListagemUsuario(usuario.getId(),
+                    usuario.getNome(),
+                    usuario.getCpf(),
+                    usuario.getDataNacimento(),
+                    usuario.getSexo(),
+                    usuario.getEmail(),
+                    usuario.getTipoUsuario());
+            return usuarioReturn;
+        }
+        return null;
     }
 
     public DadosListagemUsuario atualizarUsuario(UUID id, DadosAtualizacaoUsuario dados) {
-        Optional<Usuario> usuarioOptional = buscarPorID(id);
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
 
         if (usuarioOptional.isPresent()) {
             Usuario usuario = usuarioOptional.get();

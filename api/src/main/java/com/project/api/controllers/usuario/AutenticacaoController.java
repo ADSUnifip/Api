@@ -39,7 +39,7 @@ public class AutenticacaoController {
     public ResponseEntity efetuarLogin(@RequestBody @Valid DadosAutenticacao dados) {
         var token = new UsernamePasswordAuthenticationToken(dados.email(), dados.senha());
         var autenticacao = manager.authenticate(token);
-        var user = usuarioService.buscarPorEmail((String) token.getPrincipal());
+        var user = usuarioService.buscarPorEmailAuth((String) token.getPrincipal());
         var tokenJWT = tokenService.gerarToken(user.get());
 
         return ResponseEntity.status(HttpStatus.OK).body(new DadosTokenJWT(tokenJWT));

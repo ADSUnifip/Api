@@ -72,7 +72,6 @@ public class MedicoAssinanteService {
         if (medicoOptional.isPresent()) {
             MedicoAssinante medico = medicoOptional.get();
 
-            // Atualize os campos desejados com base no DTO recebido no corpo da solicitação
             if (dados.numeroConselho() != null) {
                 medico.setNumeroConselho(dados.numeroConselho());
             }
@@ -86,7 +85,6 @@ public class MedicoAssinanteService {
                 medico.setNomeMedicoAssinante(dados.nomeMedicoAssinante());
             }
 
-            // Salve as alterações no repositório
             medicoAssinanteRepository.save(medico);
             return ResponseEntity.status(HttpStatus.OK).body(medico);
         }

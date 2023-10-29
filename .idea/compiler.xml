@@ -11,6 +11,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="API" target="17" />
       <module name="sospet" target="17" />
     </bytecodeTargetLevel>
   </component>

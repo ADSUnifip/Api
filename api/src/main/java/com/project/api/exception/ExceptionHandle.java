@@ -33,10 +33,13 @@ public class ExceptionHandle {
     public ResponseEntity Error401(){
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Ação Não Autorizada");
     }
-    @ExceptionHandler(FormatterClosedException.class)
-    public ResponseEntity Erro403(){
+    @ExceptionHandler(HttpClientErrorException.Forbidden.class)
+    public ResponseEntity Error403(){
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Sem direito de acesso ao conteúdo solicitado");
     }
-
+    @ExceptionHandler(InternalError.class)
+    public ResponseEntity Error500(){
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro de Servidor");
+    }
 
 }

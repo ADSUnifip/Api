@@ -7,15 +7,18 @@ import com.project.api.models.Atendimento;
 import com.project.api.models.medicoAssinante.MedicoAssinante;
 import com.project.api.services.AtendimentoService;
 import com.project.api.services.ProcedimentoServicie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(origins = "*")
 public class AtendimentoController {
 
     @Autowired
@@ -28,8 +31,8 @@ public class AtendimentoController {
         return ResponseEntity.status(HttpStatus.OK).body(atendimentos);
     }
     @PostMapping
-    public ResponseEntity<Atendimento> cadastrarAtendimento(@RequestBody @Valid Atendimento obj) {
-
+    public ResponseEntity<Atendimento> cadastrarAtendimento(@ModelAttribute @Valid Atendimento obj, HttpServletRequest request) {
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         var atendimento = serviceAtendimento.cadastrarAtendimento(obj);
         return ResponseEntity.status(HttpStatus.CREATED).body(atendimento);
 

@@ -3,16 +3,20 @@ package com.project.api.controllers.medicoSolicitante;
 import com.project.api.dtos.medicoSolicitante.MedicoSolicitanteDto;
 import com.project.api.models.medicoSolicitante.MedicoSolicitante;
 import com.project.api.repositories.medicoSolicitante.MedicoSolicitedRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.*;
 
 @RestController
+@RequestMapping("/api/med")
+@CrossOrigin(origins = "*")
 public class MedicoSolicitanteController{
 
     @Autowired
@@ -20,7 +24,8 @@ public class MedicoSolicitanteController{
 
     //criação do medico
     @PostMapping("/medicoSolicitante")
-    public ResponseEntity<MedicoSolicitante> saveMedicoSolicitante(@RequestBody @Valid MedicoSolicitanteDto medicoSolicitanteDto){
+    public ResponseEntity<MedicoSolicitante> saveMedicoSolicitante(@ModelAttribute @Valid MedicoSolicitanteDto medicoSolicitanteDto, HttpServletRequest request){
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         var medicoSolicitante = new MedicoSolicitante();
         BeanUtils.copyProperties(medicoSolicitanteDto, medicoSolicitante);
         return ResponseEntity.status(HttpStatus.CREATED).body(medicoSolicitanteRepository.save(medicoSolicitante));

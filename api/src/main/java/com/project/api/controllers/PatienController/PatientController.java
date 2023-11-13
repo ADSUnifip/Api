@@ -12,13 +12,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
 import java.util.*;
 
 @RestController
 @RequestMapping("api/patient")
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:8080")
 public class PatientController {
     @Autowired()
     PatientService patientService;
@@ -41,9 +42,9 @@ public class PatientController {
 
 
     ///Mapeamento para puxar o paciente pelo seu CPF, sendo passado o CPF no body da requisição
-    @GetMapping("/findByCPF")
-    public ResponseEntity<List<Patient>> getFindByCpf(@RequestBody Patient patient){
-        return ResponseEntity.status(HttpStatus.OK).body(patientService.findByCpf(patient.getCpf()));
+    @GetMapping("/findByCPF/{cpf}")
+    public ResponseEntity<List<Patient>> getFindByCpf(@PathVariable(value = "cpf") String cpf){
+        return ResponseEntity.status(HttpStatus.OK).body(patientService.findByCpf(cpf));
     }
 
     ///Mapeamento para puxar o paciente pelo seu NOME, sendo passado o NOME no boyd da requisição
@@ -54,7 +55,8 @@ public class PatientController {
 
     ///Método para adicionar um paciente
     @PostMapping
-    public ResponseEntity<Object> savePatient (@RequestBody @Valid PatientDto patientDto, HttpServletRequest request) throws IOException {
+    public ResponseEntity<Object> savePatient (@ModelAttribute @Valid PatientDto patientDto, HttpServletRequest request) throws IOException {
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         var patient = new Patient();
         BeanUtils.copyProperties(patientDto, patient);
         return ResponseEntity.status(HttpStatus.CREATED).body(patientService.save(patient));

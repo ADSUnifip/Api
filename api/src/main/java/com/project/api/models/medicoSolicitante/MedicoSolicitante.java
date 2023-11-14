@@ -31,7 +31,7 @@ public class MedicoSolicitante implements Serializable {
     @Column(nullable = false)
     private String nomeCompl;
     @Column(nullable = false)
-    private Boolean active;
+    private Boolean active = true;
 
     public UUID getId() {
         return id;

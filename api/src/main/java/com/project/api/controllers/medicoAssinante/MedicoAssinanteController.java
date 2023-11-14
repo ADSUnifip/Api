@@ -4,12 +4,14 @@ import com.project.api.dtos.medicoAssinante.DadosAtualizacaoMedicoAssinante;
 import com.project.api.dtos.medicoAssinante.DadosCadastroMediccoAssinante;
 import com.project.api.models.medicoAssinante.MedicoAssinante;
 import com.project.api.services.medicoAssinante.MedicoAssinanteService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
@@ -17,7 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("api/medicoassinante")
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*")
 public class MedicoAssinanteController {
 
     @Autowired
@@ -31,8 +33,8 @@ public class MedicoAssinanteController {
     }
 
     @PostMapping
-    public ResponseEntity<MedicoAssinante> cadastrarMedicoAssinante(@RequestBody @Valid DadosCadastroMediccoAssinante dados) {
-
+    public ResponseEntity<MedicoAssinante> cadastrarMedicoAssinante(@ModelAttribute @Valid DadosCadastroMediccoAssinante dados, HttpServletRequest request) {
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         var medicoAssinante = medicoAssinanteService.criarMedicoAssinante(dados);
         return ResponseEntity.status(HttpStatus.CREATED).body(medicoAssinante);
 

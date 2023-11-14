@@ -3,6 +3,7 @@ package com.project.api.controllers;
 import com.project.api.dtos.ProcedimentoDto.ResponsePorcedimentoDto;
 import com.project.api.dtos.ProcedimentoDto.UpdateProcedimentoDto;
 import com.project.api.dtos.medicoAssinante.DadosCadastroMediccoAssinante;
+import com.project.api.exeptions.NotFoundException;
 import com.project.api.models.Atendimento;
 import com.project.api.models.medicoAssinante.MedicoAssinante;
 import com.project.api.services.AtendimentoService;
@@ -30,22 +31,33 @@ public class AtendimentoController {
 
         return ResponseEntity.status(HttpStatus.OK).body(atendimentos);
     }
+
     @PostMapping
     public ResponseEntity<Atendimento> cadastrarAtendimento(@ModelAttribute @Valid Atendimento obj, HttpServletRequest request) {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         var atendimento = serviceAtendimento.cadastrarAtendimento(obj);
         return ResponseEntity.status(HttpStatus.CREATED).body(atendimento);
-
     }
+
     @PatchMapping("/{id}")
     public ResponseEntity<Object> updateAtendimento(@PathVariable UUID id, @RequestBody Atendimento obj){
+
         var atendimentoAlterado = serviceAtendimento.updateAtendimento(id,obj);
+        if (atendimentoAlterado == null){
+            throw new NotFoundException("Atendimento não encontrado com ID: " + id);
+        }
 
         return ResponseEntity.ok(atendimentoAlterado);
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteAtendimento(@PathVariable UUID id){
-        serviceAtendimento.delete(id);
+        try {
+            serviceAtendimento.delete(id);
+        } catch (Exception e) {
+            throw new NotFoundException("Atendimento não encontrado com ID: " + id, e);
+        }
+
         return ResponseEntity.noContent().build();
     }
 }

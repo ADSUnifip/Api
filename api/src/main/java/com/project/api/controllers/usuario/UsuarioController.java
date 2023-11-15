@@ -6,22 +6,24 @@ import com.project.api.dtos.usuario.DadosCadastroUsuario;
 import com.project.api.dtos.usuario.DadosListagemUsuario;
 import com.project.api.models.usuario.Usuario;
 import com.project.api.repositories.usuario.UsuarioRepository;
-import com.project.api.services.authentication.TokenService;
+//import com.project.api.services.authentication.TokenService;
 import com.project.api.services.usuario.UsuarioService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("api/usuario")
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*")
 public class UsuarioController {
 
     @Autowired
@@ -30,11 +32,12 @@ public class UsuarioController {
     @Autowired
     private UsuarioRepository repository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
+    //private PasswordEncoder passwordEncoder;
 
     @PostMapping
-    public ResponseEntity criarUsuario(@RequestBody @Valid DadosCadastroUsuario dados) {
+    public ResponseEntity criarUsuario(@ModelAttribute @Valid DadosCadastroUsuario dados, HttpServletRequest request) {
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         var usuario = usuarioService.criarUsuario(dados);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }

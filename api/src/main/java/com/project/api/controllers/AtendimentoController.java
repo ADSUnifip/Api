@@ -28,6 +28,7 @@ public class AtendimentoController {
     @Autowired()
     private AtendimentoService serviceAtendimento;
 
+    //alterações
     @GetMapping
     public ResponseEntity<List<Atendimento>> listaAtendimentos() {
         var atendimentos = serviceAtendimento.listaAtendimeto();

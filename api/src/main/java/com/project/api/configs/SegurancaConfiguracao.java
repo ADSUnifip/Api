@@ -28,7 +28,7 @@ public class SegurancaConfiguracao {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and().addFilterBefore(filtroSeguranca, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

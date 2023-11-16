@@ -27,8 +27,8 @@ public class SegurancaConfiguracao {
         return http.csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
-                .anyRequest().permitAll()
+                .requestMatchers("/api/**").permitAll()
+                .anyRequest().authenticated()
                 .and().addFilterBefore(filtroSeguranca, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

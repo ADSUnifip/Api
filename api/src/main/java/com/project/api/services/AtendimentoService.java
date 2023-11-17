@@ -37,13 +37,13 @@ public class AtendimentoService {
             return null;
         }
 
-
+            //modificação
         Atendimento atendimentoAlterado = atendimentoOptional.get();
 
         atendimentoAlterado.setDate(obj.getDate());
         atendimentoAlterado.setPaciente(obj.getPaciente());
         atendimentoAlterado.setProcedimento(obj.getProcedimento());
-        atendimentoAlterado.setMedicoAssinante(obj.getMedicoAssinante());
+        atendimentoAlterado.setMedicoSolicitante(obj.getMedicoSolicitante());
 
 
 

@@ -1,8 +1,8 @@
 package com.project.api.models;
 
-import com.project.api.dtos.ProcedimentoDto.UpdateProcedimentoDto;
 import com.project.api.models.Patient.Patient;
 import com.project.api.models.medicoAssinante.MedicoAssinante;
+import com.project.api.models.medicoSolicitante.MedicoSolicitante;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,7 +20,7 @@ public class Atendimento {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    private Date date;
+    private String date;
 
     private Boolean active = true;
 
@@ -31,7 +31,7 @@ public class Atendimento {
 
     @OneToOne
     @JoinColumn(name = "medicoAssinante_id")
-    private MedicoAssinante medicoAssinante;
+    private MedicoSolicitante medicoSolicitante;
 
     @OneToOne
     @JoinColumn(name = "paciente_id")
@@ -49,11 +49,11 @@ public class Atendimento {
         this.id = id;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -73,12 +73,12 @@ public class Atendimento {
         this.procedimento = procedimento;
     }
 
-    public MedicoAssinante getMedicoAssinante() {
-        return medicoAssinante;
+    public MedicoSolicitante getMedicoAssinante() {
+        return medicoSolicitante;
     }
 
-    public void setMedicoAssinante(MedicoAssinante medicoAssinante) {
-        this.medicoAssinante = medicoAssinante;
+    public void setMedicoAssinante(MedicoSolicitante medicoSolicitante) {
+        this.medicoSolicitante = medicoSolicitante;
     }
 
     public Patient getPaciente() {

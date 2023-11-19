@@ -36,9 +36,11 @@ public class UsuarioController {
     //private PasswordEncoder passwordEncoder;
 
     @PostMapping
-    public ResponseEntity criarUsuario(@ModelAttribute @Valid DadosCadastroUsuario dados, HttpServletRequest request) {
-        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+    public ResponseEntity criarUsuario(@RequestBody @Valid DadosCadastroUsuario dados, HttpServletRequest request) {
+        //MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        System.out.println("Antes do service");
         var usuario = usuarioService.criarUsuario(dados);
+        System.out.println("Antes do service");
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
 
@@ -76,7 +78,7 @@ public class UsuarioController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity atualizarUsuario(@PathVariable UUID id, @RequestBody DadosAtualizacaoUsuario dados) {
+    public ResponseEntity atualizarUsuario(@PathVariable UUID id, @RequestBody @Valid DadosAtualizacaoUsuario dados) {
         var usuarioAtualizado = usuarioService.atualizarUsuario(id, dados);
         if (usuarioAtualizado != null) {
             return ResponseEntity.status(HttpStatus.OK).body(usuarioAtualizado);

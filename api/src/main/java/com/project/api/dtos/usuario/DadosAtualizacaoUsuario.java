@@ -14,6 +14,9 @@ public record DadosAtualizacaoUsuario(
         @PastOrPresent(message = "A data deve ser no passado ou no presente")
         LocalDate dataNascimento,
         Sexo sexo,
+
+        @Pattern(regexp = "^\\(\\d{2}\\)\\s\\d{5}-\\d{4}$", message = "O telefone deve estar no formato (XX) XXXXX-XXXX")
+        String telefone,
         TipoUsuario tipoUsuario
 
 ) {

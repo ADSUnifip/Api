@@ -20,6 +20,10 @@ public record DadosCadastroUsuario(
         LocalDate dataNascimento,
         @NotNull(message = "O sexo não pode estar em branco")
         Sexo sexo,
+
+        @Pattern(regexp = "^\\(\\d{2}\\)\\s\\d{5}-\\d{4}$", message = "O telefone deve estar no formato (XX) XXXXX-XXXX")
+        String telefone,
+
         @NotBlank(message = "O e-mail não pode estar em branco")
         @Email(message = "Digite um e-mail válido!")
         String email,

@@ -30,7 +30,7 @@ public class UsuarioService {
     public Usuario criarUsuario(DadosCadastroUsuario dados) {
         //var senhaEncriptada = passwordEncoder.encode(dados.senha());
         var senhaEncriptada = dados.senha();
-        var usuario = new Usuario(dados.nome(), dados.cpf(), dados.dataNascimento(), dados.sexo(), dados.email(), dados.senha(), dados.tipoUsuario());
+        var usuario = new Usuario(dados.nome(), dados.cpf(), dados.dataNascimento(), dados.sexo(), dados.telefone(), dados.email(), dados.senha(), dados.tipoUsuario());
         usuario.setSenha(senhaEncriptada);
         usuarioRepository.save(usuario);
         return  usuario;
@@ -46,6 +46,7 @@ public class UsuarioService {
                         usuario.getCpf(),
                         usuario.getDataNacimento(),
                         usuario.getSexo(),
+                        usuario.getTelefone(),
                         usuario.getEmail(),
                         usuario.getTipoUsuario()
                 ))
@@ -64,6 +65,7 @@ public class UsuarioService {
                     usuario.getDataNacimento(),
                     usuario.getSexo(),
                     usuario.getEmail(),
+                    usuario.getTelefone(),
                     usuario.getTipoUsuario());
             return usuarioReturn;
         }
@@ -80,6 +82,7 @@ public class UsuarioService {
                     usuario.getCpf(),
                     usuario.getDataNacimento(),
                     usuario.getSexo(),
+                    usuario.getTelefone(),
                     usuario.getEmail(),
                     usuario.getTipoUsuario());
             return usuarioReturn;
@@ -97,6 +100,7 @@ public class UsuarioService {
                     usuario.getCpf(),
                     usuario.getDataNacimento(),
                     usuario.getSexo(),
+                    usuario.getTelefone(),
                     usuario.getEmail(),
                     usuario.getTipoUsuario());
             return usuarioReturn;
@@ -118,6 +122,7 @@ public class UsuarioService {
                     usuario.getCpf(),
                     usuario.getDataNacimento(),
                     usuario.getSexo(),
+                    usuario.getTelefone(),
                     usuario.getEmail(),
                     usuario.getTipoUsuario());
             return usuarioReturn;
@@ -147,6 +152,10 @@ public class UsuarioService {
                 usuario.setSexo(dados.sexo());
             }
 
+            if (dados.telefone() != null) {
+                usuario.setTelefone(dados.telefone());
+            }
+
             if (dados.tipoUsuario() != null) {
                 usuario.setTipoUsuario(dados.tipoUsuario());
             }
@@ -157,6 +166,7 @@ public class UsuarioService {
                     usuario.getCpf(),
                     usuario.getDataNacimento(),
                     usuario.getSexo(),
+                    usuario.getTelefone(),
                     usuario.getEmail(),
                     usuario.getTipoUsuario());
             return usuarioReturn;

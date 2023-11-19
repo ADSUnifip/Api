@@ -31,6 +31,9 @@ public class Usuario implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
 
+    @Column()
+    private String telefone;
+
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -41,14 +44,23 @@ public class Usuario implements UserDetails {
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipoUsuario;
 
-    public Usuario(String nome, String cpf, LocalDate dataNacimento, Sexo sexo, String email, String senha, TipoUsuario tipoUsuario) {
+    public Usuario(String nome, String cpf, LocalDate dataNacimento, Sexo sexo, String telefone, String email, String senha, TipoUsuario tipoUsuario) {
         this.nome = nome;
         this.cpf = cpf;
         this.dataNacimento = dataNacimento;
         this.sexo = sexo;
+        this.telefone = telefone;
         this.email = email;
         this.senha = senha;
         this.tipoUsuario = tipoUsuario;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public Usuario() {

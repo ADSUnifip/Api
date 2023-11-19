@@ -38,9 +38,7 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity criarUsuario(@RequestBody @Valid DadosCadastroUsuario dados, HttpServletRequest request) {
         //MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-        System.out.println("Antes do service");
         var usuario = usuarioService.criarUsuario(dados);
-        System.out.println("Antes do service");
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
 

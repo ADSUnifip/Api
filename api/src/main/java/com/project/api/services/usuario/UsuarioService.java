@@ -3,6 +3,7 @@ package com.project.api.services.usuario;
 import com.project.api.dtos.usuario.DadosAtualizacaoUsuario;
 import com.project.api.dtos.usuario.DadosCadastroUsuario;
 import com.project.api.dtos.usuario.DadosListagemUsuario;
+import com.project.api.models.Endereco;
 import com.project.api.models.usuario.Usuario;
 import com.project.api.repositories.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class UsuarioService {
     public Usuario criarUsuario(DadosCadastroUsuario dados) {
         //var senhaEncriptada = passwordEncoder.encode(dados.senha());
         var senhaEncriptada = dados.senha();
-        var usuario = new Usuario(dados.nome(), dados.cpf(), dados.dataNascimento(), dados.sexo(), dados.telefone(), dados.email(), dados.senha(), dados.tipoUsuario());
+        var usuario = new Usuario(dados.nome(), dados.cpf(), dados.dataNascimento(), dados.sexo(), dados.telefone(), dados.endereco(), dados.email(), dados.senha(), dados.tipoUsuario());
         usuario.setSenha(senhaEncriptada);
         usuarioRepository.save(usuario);
         return  usuario;
@@ -47,6 +48,7 @@ public class UsuarioService {
                         usuario.getDataNacimento(),
                         usuario.getSexo(),
                         usuario.getTelefone(),
+                        usuario.getEndereco(),
                         usuario.getEmail(),
                         usuario.getTipoUsuario()
                 ))
@@ -65,6 +67,7 @@ public class UsuarioService {
                     usuario.getDataNacimento(),
                     usuario.getSexo(),
                     usuario.getEmail(),
+                    usuario.getEndereco(),
                     usuario.getTelefone(),
                     usuario.getTipoUsuario());
             return usuarioReturn;
@@ -83,6 +86,7 @@ public class UsuarioService {
                     usuario.getDataNacimento(),
                     usuario.getSexo(),
                     usuario.getTelefone(),
+                    usuario.getEndereco(),
                     usuario.getEmail(),
                     usuario.getTipoUsuario());
             return usuarioReturn;
@@ -101,6 +105,7 @@ public class UsuarioService {
                     usuario.getDataNacimento(),
                     usuario.getSexo(),
                     usuario.getTelefone(),
+                    usuario.getEndereco(),
                     usuario.getEmail(),
                     usuario.getTipoUsuario());
             return usuarioReturn;
@@ -123,6 +128,7 @@ public class UsuarioService {
                     usuario.getDataNacimento(),
                     usuario.getSexo(),
                     usuario.getTelefone(),
+                    usuario.getEndereco(),
                     usuario.getEmail(),
                     usuario.getTipoUsuario());
             return usuarioReturn;
@@ -156,6 +162,10 @@ public class UsuarioService {
                 usuario.setTelefone(dados.telefone());
             }
 
+            if (dados.endereco() != null) {
+                usuario.atualizarEndereco(dados.endereco());
+            }
+
             if (dados.tipoUsuario() != null) {
                 usuario.setTipoUsuario(dados.tipoUsuario());
             }
@@ -167,6 +177,7 @@ public class UsuarioService {
                     usuario.getDataNacimento(),
                     usuario.getSexo(),
                     usuario.getTelefone(),
+                    usuario.getEndereco(),
                     usuario.getEmail(),
                     usuario.getTipoUsuario());
             return usuarioReturn;

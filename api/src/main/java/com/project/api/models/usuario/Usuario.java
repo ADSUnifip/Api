@@ -1,5 +1,8 @@
 package com.project.api.models.usuario;
 
+import com.project.api.dtos.DadosAtualizacaoEndereco;
+import com.project.api.dtos.DadosEndereco;
+import com.project.api.models.Endereco;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,6 +37,9 @@ public class Usuario implements UserDetails {
     @Column()
     private String telefone;
 
+    @Embedded
+    private Endereco endereco;
+
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -44,15 +50,46 @@ public class Usuario implements UserDetails {
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipoUsuario;
 
-    public Usuario(String nome, String cpf, LocalDate dataNacimento, Sexo sexo, String telefone, String email, String senha, TipoUsuario tipoUsuario) {
+    public Usuario(String nome, String cpf, LocalDate dataNacimento, Sexo sexo, String telefone, DadosEndereco endereco, String email, String senha, TipoUsuario tipoUsuario) {
         this.nome = nome;
         this.cpf = cpf;
         this.dataNacimento = dataNacimento;
         this.sexo = sexo;
         this.telefone = telefone;
+        this.endereco = new Endereco(endereco.rua(), endereco.bairro(), endereco.numero(), endereco.cidade(), endereco.estado());
         this.email = email;
         this.senha = senha;
         this.tipoUsuario = tipoUsuario;
+    }
+
+    public void atualizarEndereco(DadosAtualizacaoEndereco dados) {
+        if (dados.rua() != null) {
+            endereco.setRua(dados.rua());
+        }
+
+        if (dados.bairro() != null) {
+            endereco.setBairro(dados.bairro());
+        }
+
+        if (dados.numero() != null) {
+            endereco.setNumero(dados.numero());
+        }
+
+        if (dados.cidade() != null) {
+            endereco.setCidade(dados.cidade());
+        }
+
+        if (dados.estado() != null) {
+            endereco.setEstado(dados.estado());
+        }
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     public String getTelefone() {

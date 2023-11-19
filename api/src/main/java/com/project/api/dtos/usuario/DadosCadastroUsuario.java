@@ -1,7 +1,9 @@
 package com.project.api.dtos.usuario;
 
+import com.project.api.dtos.DadosEndereco;
 import com.project.api.models.usuario.Sexo;
 import com.project.api.models.usuario.TipoUsuario;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -23,6 +25,10 @@ public record DadosCadastroUsuario(
 
         @Pattern(regexp = "^\\(\\d{2}\\)\\s\\d{5}-\\d{4}$", message = "O telefone deve estar no formato (XX) XXXXX-XXXX")
         String telefone,
+
+        @NotNull
+        @Valid
+        DadosEndereco endereco,
 
         @NotBlank(message = "O e-mail não pode estar em branco")
         @Email(message = "Digite um e-mail válido!")

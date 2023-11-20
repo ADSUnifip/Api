@@ -1,5 +1,6 @@
 package com.project.api.models.Patient;
 
+import com.project.api.dtos.PatientDto.PatientDto;
 import jakarta.persistence.*;
 import lombok.*;
 import jakarta.persistence.Entity;
@@ -33,8 +34,8 @@ public class Patient implements Serializable {
     @Column(nullable = false, length = 50)
     private String sex;
 
-    @Column(nullable = false)
-    private Date menstuDate;
+    @Column(nullable = false, length = 100)
+    private String email;
 
     @Column(nullable = false, length = 50)
     private String telephone;
@@ -42,15 +43,14 @@ public class Patient implements Serializable {
     @Column(nullable = false)
     private Boolean active;
 
-    public Patient(UUID id, String fullName, String cpf, Date birthDate, String sex, Date menstuDate, String telephone, Boolean active) {
-        this.id = id;
-        this.fullName = fullName;
-        this.cpf = cpf;
-        this.birthDate = birthDate;
-        this.sex = sex;
-        this.menstuDate = menstuDate;
-        this.telephone = telephone;
-        this.active = active;
+    public Patient(PatientDto patientDto) {
+        this.fullName = patientDto.getFullName();
+        this.cpf = patientDto.getCpf();
+        this.birthDate = patientDto.getBirthDate();
+        this.sex = patientDto.getSex();
+        this.telephone = patientDto.getTelephone();
+        this.email = patientDto.getEmail();
+        this.active = true;
     }
     public Patient() {
     }

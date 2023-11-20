@@ -24,9 +24,8 @@ public class Procedimento {
     @Column(nullable = false, length = 200)
     private String nomeProcedimento;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn
-    private TipoAmostra amostraPadrao;
+    @Column(nullable = false, length = 255)
+    private String amostraPadrao;
 
     @Column(nullable = false, length = 200)
     private String metodologia;
@@ -36,7 +35,7 @@ public class Procedimento {
     public Procedimento(CreateProcedimentoDto dto) {
         this.menemonico = dto.menemonico();
         this.nomeProcedimento = dto.nomeProcedimento();
-        this.amostraPadrao = new TipoAmostra(dto.amostraPadrao());
+        this.amostraPadrao = dto.amostraPadrao();
         this.metodologia = dto.metodologia();
         this.ativo = true;
     }
@@ -52,7 +51,7 @@ public class Procedimento {
             this.nomeProcedimento = dto.nomeProcedimento();
         }
         if (dto.amostraPadrao() != null) {
-            this.amostraPadrao.edit(dto.amostraPadrao());
+            this.amostraPadrao = dto.amostraPadrao();
         }
         if (dto.metodologia() != null) {
             this.metodologia = dto.metodologia();

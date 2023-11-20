@@ -1,7 +1,6 @@
 package com.project.api.dtos.ProcedimentoDto;
 
 import com.project.api.models.Procedimento;
-import com.project.api.models.TipoAmostra;
 
 import java.util.UUID;
 
@@ -9,7 +8,7 @@ public record ResponsePorcedimentoDto(
         UUID id,
         String menemonico,
         String nomeProcedimento,
-        TipoAmostra amostraPadrao,
+        String amostraPadrao,
         String metodologia
 ) {
 

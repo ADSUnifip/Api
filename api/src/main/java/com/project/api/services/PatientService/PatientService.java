@@ -1,5 +1,6 @@
 package com.project.api.services.PatientService;
 
+import com.project.api.dtos.PatientDto.PatientDto;
 import com.project.api.dtos.PatientDto.UpdatePatientDto;
 import com.project.api.models.Patient.Patient;
 import com.project.api.repositories.PatientRepository.PatientRepository;
@@ -41,8 +42,8 @@ public class PatientService {
     }
 
     @Transactional
-    public Patient save(Patient patient){
-        patient.setActive(true);
+    public Patient save(PatientDto patientDto){
+        var patient = new Patient(patientDto);
         return patientRepository.save(patient);
     }
 
@@ -64,14 +65,12 @@ public class PatientService {
             if (dto.birthDate() !=null){
                 patient.setBirthDate(dto.birthDate());
             }
-            if (dto.menstuDate() !=null){
-                patient.setMenstuDate(dto.menstuDate());
-            }
+
             if (dto.telephone() !=null){
                 patient.setTelephone(dto.telephone());
             }
-            if (dto.active() !=null){
-                patient.setActive(dto.active());
+            if (dto.email() !=null){
+                patient.setEmail(dto.email());
             }
 
             patientRepository.save(patient);

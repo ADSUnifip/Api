@@ -7,7 +7,8 @@ public record UpdatePatientDto (
     String cpf,
     Date birthDate,
     String sex,
-    Date menstuDate,
+
     String telephone,
-    Boolean active
+    String email
+
 ){}

@@ -1,5 +1,6 @@
 package com.project.api.dtos.PatientDto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 import jakarta.validation.constraints.NotNull;
@@ -23,10 +24,10 @@ public class PatientDto {
     @NotBlank
     private String sex;
 
-    private Date menstuDate;
+    @Email
+    private  String email;
 
     @NotBlank
     private String telephone;
 
-    private Boolean active;
 }

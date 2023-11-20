@@ -57,9 +57,8 @@ public class PatientController {
     @PostMapping
     public ResponseEntity<Object> savePatient (@ModelAttribute @Valid PatientDto patientDto, HttpServletRequest request) throws IOException {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-        var patient = new Patient();
-        BeanUtils.copyProperties(patientDto, patient);
-        return ResponseEntity.status(HttpStatus.CREATED).body(patientService.save(patient));
+        var patient = patientService.save(patientDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(patient);
     }
 
     ///Método para deletar um cliente, porém ele não é exluido do banco de dados apenas recebe o false no ACTIVE

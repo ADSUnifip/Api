@@ -55,8 +55,8 @@ public class PatientController {
 
     ///Método para adicionar um paciente
     @PostMapping
-    public ResponseEntity<Object> savePatient (@ModelAttribute @Valid PatientDto patientDto, HttpServletRequest request) throws IOException {
-        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+    public ResponseEntity savePatient (@RequestBody @Valid PatientDto patientDto, HttpServletRequest request) throws IOException {
+        //MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         var patient = patientService.save(patientDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(patient);
     }
@@ -74,8 +74,11 @@ public class PatientController {
 
     ///Método para atualizar algum atributo do paciente
     @PatchMapping("/{id}")
-    public ResponseEntity updatePatient(@PathVariable UUID id, @RequestBody UpdatePatientDto dto){
+    public ResponseEntity updatePatient(@PathVariable UUID id, @RequestBody @Valid UpdatePatientDto dto){
         var patient = patientService.updatePatient(id, dto);
-        return patient;
+        if (patient !=null) {
+            return ResponseEntity.status(HttpStatus.OK).body(patient);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }

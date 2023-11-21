@@ -1,5 +1,7 @@
 package com.project.api.dtos.PatientDto;
 
+import com.project.api.models.Endereco;
+
 import java.util.Date;
 
 public record UpdatePatientDto (
@@ -9,6 +11,7 @@ public record UpdatePatientDto (
     String sex,
 
     String telephone,
-    String email
+    String email,
+    Endereco endereco
 
 ){}

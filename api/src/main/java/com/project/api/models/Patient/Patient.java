@@ -1,13 +1,17 @@
 package com.project.api.models.Patient;
 
+
 import com.project.api.dtos.PatientDto.PatientDto;
+import com.project.api.models.Endereco;
 import jakarta.persistence.*;
 import lombok.*;
 import jakarta.persistence.Entity;
 
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -22,23 +26,26 @@ public class Patient implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(nullable = false, length = 256)
+    @Column(nullable = false)
     private String fullName;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, unique = true)
     private String cpf;
 
     @Column(nullable = false)
-    private Date birthDate;
+    private LocalDate birthDate;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private String sex;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private String telephone;
+
+    @Embedded
+    private Endereco endereco;
 
     @Column(nullable = false)
     private Boolean active;
@@ -50,8 +57,14 @@ public class Patient implements Serializable {
         this.sex = patientDto.getSex();
         this.telephone = patientDto.getTelephone();
         this.email = patientDto.getEmail();
+        this.endereco = patientDto.getEndereco();
         this.active = true;
     }
+
     public Patient() {
     }
+
+    public void setBirthDate(Date date) {
+    }
+
 }

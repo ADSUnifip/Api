@@ -72,6 +72,9 @@ public class PatientService {
             if (dto.email() !=null){
                 patient.setEmail(dto.email());
             }
+            if (dto.endereco() !=null){
+                patient.setEndereco(dto.endereco());
+            }
 
             patientRepository.save(patient);
             return ResponseEntity.status(HttpStatus.OK).body(patient);

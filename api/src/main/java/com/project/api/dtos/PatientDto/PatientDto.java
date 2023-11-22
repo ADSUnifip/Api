@@ -28,7 +28,7 @@ public class PatientDto {
     @NotNull(message = "A data não pode estar em branco")
     LocalDate birthDate;
 
-    @NotBlank(message = "O Sexo não pode estar em branco")
+    @NotBlank(message = "Selecione Masculino ou Feminino")
     String sex;
 
     Date menstuDate;

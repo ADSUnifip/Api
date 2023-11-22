@@ -20,8 +20,9 @@ public record DadosCadastroUsuario(
         @NotNull(message = "A data não pode estar em branco")
         @PastOrPresent(message = "A data deve ser no passado ou no presente")
         LocalDate dataNascimento,
-        @NotNull(message = "O sexo não pode estar em branco")
-        Sexo sexo,
+        @NotBlank(message = "O sexo não pode estar em branco")
+        @Pattern(regexp = "^[MF]$", message = "O sexo deve ser Masculino ou Feminíno")
+        String sexo,
 
         @Pattern(regexp = "^\\(\\d{2}\\)\\s\\d{5}-\\d{4}$", message = "O telefone deve estar no formato (XX) XXXXX-XXXX")
         String telefone,

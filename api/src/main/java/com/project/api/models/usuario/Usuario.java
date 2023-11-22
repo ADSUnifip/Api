@@ -21,7 +21,7 @@ public class Usuario implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String nome;
 
     @Column(nullable = false, unique = true)
@@ -50,13 +50,13 @@ public class Usuario implements UserDetails {
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipoUsuario;
 
-    public Usuario(String nome, String cpf, LocalDate dataNacimento, Sexo sexo, String telefone, DadosEndereco endereco, String email, String senha, TipoUsuario tipoUsuario) {
+    public Usuario(String nome, String cpf, LocalDate dataNacimento, String sexo, String telefone, DadosEndereco endereco, String email, String senha, TipoUsuario tipoUsuario) {
         this.nome = nome;
         this.cpf = cpf;
         this.dataNacimento = dataNacimento;
-        this.sexo = sexo;
+        this.sexo = Sexo.valueOf(sexo);
         this.telefone = telefone;
-        this.endereco = new Endereco(endereco.rua(), endereco.bairro(), endereco.numero(), endereco.cidade(), endereco.estado());
+        this.endereco = new Endereco(endereco.rua(), endereco.bairro(), endereco.cep(), endereco.numero(), endereco.cidade(), endereco.estado());
         this.email = email;
         this.senha = senha;
         this.tipoUsuario = tipoUsuario;
@@ -69,6 +69,10 @@ public class Usuario implements UserDetails {
 
         if (dados.bairro() != null) {
             endereco.setBairro(dados.bairro());
+        }
+
+        if (dados.cep() != null) {
+            endereco.setCep(dados.cep());
         }
 
         if (dados.numero() != null) {
@@ -147,8 +151,8 @@ public class Usuario implements UserDetails {
         return sexo;
     }
 
-    public void setSexo(Sexo sexo) {
-        this.sexo = sexo;
+    public void setSexo(String sexo) {
+        this.sexo = Sexo.valueOf(sexo);
     }
 
     public String getEmail() {

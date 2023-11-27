@@ -43,7 +43,7 @@ public class AtendimentoService {
         atendimentoAlterado.setDate(obj.getDate());
         atendimentoAlterado.setPaciente(obj.getPaciente());
         atendimentoAlterado.setProcedimento(obj.getProcedimento());
-        atendimentoAlterado.setMedicoAssinante(obj.getMedicoAssinante());
+        atendimentoAlterado.setMedicoSolictante(obj.getMedicoSolicitante());
 
 
 

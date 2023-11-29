@@ -5,8 +5,11 @@ import com.project.api.dtos.ProcedimentoDto.UpdateProcedimentoDto;
 import com.project.api.dtos.medicoAssinante.DadosCadastroMediccoAssinante;
 import com.project.api.exeptions.NotFoundException;
 import com.project.api.models.Atendimento;
+import com.project.api.models.AtendimentoProcedi;
 import com.project.api.models.medicoAssinante.MedicoAssinante;
+import com.project.api.services.AtendimentoProcediService;
 import com.project.api.services.AtendimentoService;
+
 import com.project.api.services.ProcedimentoServicie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -28,6 +31,8 @@ public class AtendimentoController {
     @Autowired()
     private AtendimentoService serviceAtendimento;
 
+
+
     //alterações
     @GetMapping
     public ResponseEntity<List<Atendimento>> listaAtendimentos() {
@@ -42,6 +47,8 @@ public class AtendimentoController {
         var atendimento = serviceAtendimento.cadastrarAtendimento(obj);
         return ResponseEntity.status(HttpStatus.CREATED).body(atendimento);
     }
+
+
 
     @PatchMapping("/{id}")
     public ResponseEntity<Object> updateAtendimento(@PathVariable UUID id, @RequestBody Atendimento obj){

@@ -25,9 +25,9 @@ public class Atendimento {
     private Boolean active = true;
 
 
-    @OneToMany
-    @JoinColumn(name = "procedimento_id")
-    private List<Procedimento> procedimento;
+//    @ManyToMany
+//    @JoinColumn(name = "procedimento_id")
+//    private List<Procedimento> procedimento;
 
     @OneToOne
     @JoinColumn(name = "medicoSolicitante_id")
@@ -65,17 +65,17 @@ public class Atendimento {
         this.active = active;
     }
 
-    public List<Procedimento> getProcedimento() {
-        return procedimento;
-    }
+    //public List<Procedimento> getProcedimento() {
+       // return procedimento;
+    //}
 
-    public void setProcedimento(List<Procedimento> procedimento) {
-        this.procedimento = procedimento;
-    }
-
-    public MedicoSolicitante getMedicoSolicitante() {
-        return medicoSolicitante;
-    }
+    //public void setProcedimento(List<Procedimento> procedimento) {
+//        this.procedimento = procedimento;
+//    }
+//
+//    public MedicoSolicitante getMedicoSolicitante() {
+//        return medicoSolicitante;
+//    }
 
     public void setMedicoSolictante(MedicoSolicitante medicoSolicitante) {
         this.medicoSolicitante = medicoSolicitante;

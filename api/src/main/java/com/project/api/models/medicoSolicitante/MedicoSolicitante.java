@@ -72,4 +72,6 @@ public class MedicoSolicitante implements Serializable {
     public void setActive(Boolean active) {
         this.active = active;
     }
+
+
 }

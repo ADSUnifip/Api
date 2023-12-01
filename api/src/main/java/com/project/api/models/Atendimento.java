@@ -1,8 +1,8 @@
 package com.project.api.models;
 
-import com.project.api.dtos.ProcedimentoDto.UpdateProcedimentoDto;
 import com.project.api.models.Patient.Patient;
 import com.project.api.models.medicoAssinante.MedicoAssinante;
+import com.project.api.models.medicoSolicitante.MedicoSolicitante;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,13 +25,13 @@ public class Atendimento {
     private Boolean active = true;
 
 
-    @OneToMany()
+    @OneToMany
     @JoinColumn(name = "procedimento_id")
     private List<Procedimento> procedimento;
 
     @OneToOne
-    @JoinColumn(name = "medicoAssinante_id")
-    private MedicoAssinante medicoAssinante;
+    @JoinColumn(name = "medicoSolicitante_id")
+    private MedicoSolicitante medicoSolicitante;
 
     @OneToOne
     @JoinColumn(name = "paciente_id")
@@ -73,12 +73,12 @@ public class Atendimento {
         this.procedimento = procedimento;
     }
 
-    public MedicoAssinante getMedicoAssinante() {
-        return medicoAssinante;
+    public MedicoSolicitante getMedicoSolicitante() {
+        return medicoSolicitante;
     }
 
-    public void setMedicoAssinante(MedicoAssinante medicoAssinante) {
-        this.medicoAssinante = medicoAssinante;
+    public void setMedicoSolictante(MedicoSolicitante medicoSolicitante) {
+        this.medicoSolicitante = medicoSolicitante;
     }
 
     public Patient getPaciente() {

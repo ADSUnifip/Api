@@ -55,7 +55,7 @@ public class PatientController {
 
     ///Método para adicionar um paciente
     @PostMapping
-    public ResponseEntity savePatient (@RequestBody @Valid PatientDto patientDto, HttpServletRequest request) throws IOException {
+    public ResponseEntity savePatient (@ModelAttribute @Valid PatientDto patientDto, HttpServletRequest request) {
         //MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         var patient = patientService.save(patientDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(patient);

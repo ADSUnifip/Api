@@ -1,8 +1,10 @@
 package com.project.api.services.usuario;
 
+import com.google.gson.Gson;
 import com.project.api.dtos.usuario.DadosAtualizacaoUsuario;
 import com.project.api.dtos.usuario.DadosCadastroUsuario;
 import com.project.api.dtos.usuario.DadosListagemUsuario;
+import com.project.api.dtos.usuario.ErrorResponse;
 import com.project.api.models.Endereco;
 import com.project.api.models.usuario.Usuario;
 import com.project.api.repositories.usuario.UsuarioRepository;
@@ -10,8 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.http.ResponseEntity;
 //import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,13 +33,31 @@ public class UsuarioService {
     //private PasswordEncoder passwordEncoder;
 
     @Transactional
-    public Usuario criarUsuario(DadosCadastroUsuario dados) {
+    public ResponseEntity<Object> criarUsuario(DadosCadastroUsuario dados) {
+        Optional<Usuario> usuarioExistente = usuarioRepository.findByCpf(dados.cpf());
+
+        if (usuarioExistente.isPresent()) {
+            var error = new ErrorResponse(400, "CPF já cadastrado");
+
+            // Lança uma exceção com a mensagem de erro
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        }
+
+        Optional<Usuario> usuarioExistenteEmail = usuarioRepository.buscarPorEmail(dados.email());
+
+        if (usuarioExistenteEmail.isPresent()) {
+            var error = new ErrorResponse(400, "Email já cadastrado");
+
+            // Lança uma exceção com a mensagem de erro
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        }
+
         //var senhaEncriptada = passwordEncoder.encode(dados.senha());
         var senhaEncriptada = dados.senha();
         var usuario = new Usuario(dados.nome(), dados.cpf(), dados.dataNascimento(), dados.sexo(), dados.telefone(), dados.endereco(), dados.email(), dados.senha(), dados.tipoUsuario());
         usuario.setSenha(senhaEncriptada);
         usuarioRepository.save(usuario);
-        return  usuario;
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
 
     @Transactional
@@ -136,7 +159,16 @@ public class UsuarioService {
         return null;
     }
 
-    public DadosListagemUsuario atualizarUsuario(UUID id, DadosAtualizacaoUsuario dados) {
+    public ResponseEntity<Object> atualizarUsuario(UUID id, DadosAtualizacaoUsuario dados) {
+        Optional<Usuario> usuarioExistente = usuarioRepository.findByCpf(dados.cpf());
+
+        if (usuarioExistente.isPresent()) {
+            var error = new ErrorResponse(400, "CPF já cadastrado");
+
+            // Lança uma exceção com a mensagem de erro
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        }
+
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
 
         if (usuarioOptional.isPresent()) {
@@ -180,8 +212,8 @@ public class UsuarioService {
                     usuario.getEndereco(),
                     usuario.getEmail(),
                     usuario.getTipoUsuario());
-            return usuarioReturn;
+            return ResponseEntity.status(HttpStatus.OK).body(usuarioReturn);
         }
-        return null;
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }

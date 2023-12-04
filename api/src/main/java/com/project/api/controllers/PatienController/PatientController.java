@@ -57,6 +57,9 @@ public class PatientController {
     @PostMapping
     public ResponseEntity savePatient (@ModelAttribute @Valid PatientDto patientDto, HttpServletRequest request) throws IOException {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+
+    public ResponseEntity savePatient (@ModelAttribute @Valid PatientDto patientDto, HttpServletRequest request) {
+        //MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         var patient = patientService.save(patientDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(patient);
     }
